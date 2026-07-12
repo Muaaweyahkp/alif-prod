@@ -1,0 +1,216 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% block content %}
+    <main>
+        <!-- BREADCRUMB SECTION START -->
+        <div class="ul-container">
+            <div class="ul-breadcrumb">
+                <h2 class="ul-breadcrumb-title">Shop Details</h2>
+                <div class="ul-breadcrumb-nav">
+                    <a href="{% url 'web:index' %}"><i class="flaticon-home"></i> Home</a>
+                    <i class="flaticon-arrow-point-to-right"></i>
+                    <a href="{% url 'web:shop' %}">Shop</a>
+                    <i class="flaticon-arrow-point-to-right"></i>
+                    <span class="current-page">{{ product.name }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- BREADCRUMB SECTION END -->
+
+        <!-- MAIN CONTENT SECTION START -->
+        <div class="ul-inner-page-container">
+            <div class="ul-product-details">
+                <div class="ul-product-details-top">
+                    <div class="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
+                        <!-- img -->
+                        <div class="col">
+                            <div class="ul-product-details-img">
+                                <div class="ul-product-details-img-slider swiper">
+                                    <div class="swiper-wrapper">
+                                        <!-- single img -->
+                                        {% if product.image %}
+                                            <div class="swiper-slide"><img src="{{ product.image.url }}" alt="Product Image"></div>
+                                        {% else %}
+                                            <div class="swiper-slide"><img src="{% static 'web/img/default-product.jpg' %}" alt="Product Image"></div>
+                                        {% endif %}
+                                        <!-- Additional images can be added here if multiple images are supported in the future -->
+                                    </div>
+
+                                    <div class="ul-product-details-img-slider-nav" id="ul-product-details-img-slider-nav">
+                                        <button class="prev"><i class="flaticon-left-arrow"></i></button>
+                                        <button class="next"><i class="flaticon-arrow-point-to-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- txt -->
+                        <div class="col">
+                            <div class="ul-product-details-txt">
+                                <!-- product rating -->
+                                <div class="ul-product-details-rating">
+                                    <span class="rating">
+                                        <i class="flaticon-star"></i>
+                                        <i class="flaticon-star"></i>
+                                        <i class="flaticon-star"></i>
+                                        <i class="flaticon-star"></i>
+                                        <i class="flaticon-star"></i>
+                                    </span>
+                                    <span class="review-number">({{ reviews.count }} Customer Reviews)</span>
+                                </div>
+
+                                <!-- product title -->
+                                <h3 class="ul-product-details-title">{{ product.name }}</h3>
+
+                                <!-- product description -->
+                                <p class="ul-product-details-descr">{{ product.description|default:"No description available." }}</p>
+
+                                <!-- product options -->
+                                <div class="ul-product-details-options">
+                                    <div class="ul-product-details-option ul-product-details-sizes">
+                                        <span class="title">Available Size(s)</span>
+                                        <span class="size-display">
+                                            {% if product.sizes %}
+                                                {% for size in product.sizes %}
+                                                    {{ size }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- product quantity -->
+                                <div class="ul-product-details-option ul-product-details-quantity">
+                                    <span class="title">Quantity</span>
+                                    <form action="#" class="ul-product-quantity-wrapper">
+                                        <input type="number" name="product-quantity" id="ul-product-details-quantity" class="ul-product-quantity" value="1" min="1" readonly>
+                                        <div class="btns">
+                                            <button type="button" class="quantityIncreaseButton"><i class="flaticon-plus"></i></button>
+                                            <button type="button" class="quantityDecreaseButton"><i class="flaticon-minus-sign"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- product actions -->
+                                <div class="ul-product-details-actions">
+                                    <div class="left">
+                                        <a href="{{ whatsapp_link }}" class="ul-btn">Buy Now <span class="icon"><i class="flaticon-cart"></i></span></a>
+                                    </div>
+                                    <div class="share-options">
+                                        <button><i class="flaticon-facebook-app-symbol"></i></button>
+                                        <button><i class="flaticon-twitter"></i></button>
+                                        <button><i class="flaticon-linkedin-big-logo"></i></button>
+                                        <a href="{{ whatsapp_link }}"><i class="flaticon-youtube"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ul-product-details-bottom">
+                    <!-- description -->
+                    <div class="ul-product-details-long-descr-wrapper">
+                        <h3 class="ul-product-details-inner-title">Item Description</h3>
+                        <p>{{ product.description|default:"No description available." }}</p>
+                    </div>
+
+                    <!-- reviews -->
+                    <div class="ul-product-details-reviews">
+                        <h3 class="ul-product-details-inner-title">{{ reviews.count }} Reviews</h3>
+                        {% for review in reviews %}
+                        <!-- single review -->
+                        <div class="ul-product-details-review">
+                            <!-- reviewer image -->
+                            <div class="ul-product-details-review-reviewer-img">
+                                <img src="{{ review.image.url|default:'% static "web/img/default-reviewer.jpg" %' }}" alt="Reviewer Image">
+                            </div>
+
+                            <div class="ul-product-details-review-txt">
+                                <div class="header">
+                                    <div class="left">
+                                        <h4 class="reviewer-name">{{ review.reviewer_name }}</h4>
+                                        <h5 class="review-date">{{ review.created_at|date:"F d, Y at h:i a" }}</h5>
+                                    </div>
+
+                                    <div class="right">
+                                        <div class="rating">
+                                            {% for i in "xxxxx"|make_list %}
+                                                {% if forloop.counter <= review.rating %}
+                                                    <i class="flaticon-star"></i>
+                                                {% else %}
+                                                    <i class="flaticon-star-3"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p>{{ review.review_text }}</p>
+                                <button class="ul-product-details-review-reply-btn">Reply</button>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No reviews yet.</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- review form -->
+                    <div class="ul-product-details-review-form-wrapper">
+                        <h3 class="ul-product-details-inner-title">Write A Review</h3>
+                        <span class="note">Your email address will not be published.</span>
+
+                        <form class="ul-product-details-review-form" method="post" action="{% url 'web:product_detail' product.slug %}">
+                            {% csrf_token %}
+                            <div class="form-group rating-field-wrapper">
+                                <span class="title">Rate this product? *</span>
+                                <div class="rating-field">
+                                    <input type="hidden" name="rating" id="review-rating" value="0">
+                                    <button type="button" data-rating="1"><i class="flaticon-star-3"></i></button>
+                                    <button type="button" data-rating="2"><i class="flaticon-star-3"></i></button>
+                                    <button type="button" data-rating="3"><i class="flaticon-star-3"></i></button>
+                                    <button type="button" data-rating="4"><i class="flaticon-star-3"></i></button>
+                                    <button type="button" data-rating="5"><i class="flaticon-star-3"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row row-cols-2 row-cols-xxs-1 ul-bs-row">
+                                <div class="form-group">
+                                    <input type="text" name="reviewer_name" id="review-name" placeholder="Your Name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="email" name="reviewer_email" id="review-email" placeholder="Your Email" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <textarea name="review_text" id="review-message" placeholder="Your Review" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit">Post Review <span><i class="flaticon-up-right-arrow"></i></span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- MAIN CONTENT SECTION END -->
+    </main>
+
+    <script>
+        document.querySelectorAll('.rating-field button').forEach(button => {
+            button.addEventListener('click', function() {
+                const rating = this.getAttribute('data-rating');
+                document.getElementById('review-rating').value = rating;
+                this.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                for (let i = 1; i <= rating; i++) {
+                    this.parentElement.querySelector(`button[data-rating="${i}"]`).classList.add('active');
+                }
+            });
+        });
+    </script>
+{% endblock %}

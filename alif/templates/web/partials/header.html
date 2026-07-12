@@ -1,0 +1,182 @@
+{% load static %}
+<!-- SIDEBAR SECTION START -->
+<div class="ul-sidebar">
+    <!-- header -->
+    <div class="ul-sidebar-header">
+        <div class="ul-sidebar-header-logo">
+            <a href="{% url 'web:index' %}">
+                <img src="{% static "web/img/alif nneww.png" %}" alt="logo" class="logo">
+            </a>
+        </div>
+        <!-- sidebar closer -->
+        <button class="ul-sidebar-closer"><i class="flaticon-close"></i></button>
+    </div>
+
+    <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
+
+    <div class="ul-sidebar-about d-none d-lg-block">
+        <span class="title">About Alif Uniforms</span>
+        <p class="mb-0">At Alif Uniforms, we specialize in crafting high-quality uniforms for industries like aviation, healthcare, and education. Our commitment to durability and style ensures professionals stand out with confidence.</p>
+    </div>
+
+    <!-- product slider -->
+    <div class="ul-sidebar-products-wrapper d-none d-lg-flex">
+        <div class="ul-sidebar-products-slider swiper">
+            <div class="swiper-wrapper">
+                <!-- product card -->
+                {% for product in products %}
+                <div class="swiper-slide">
+                    <div class="ul-product">
+                        <div class="ul-product-img">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'web/img/default-product.jpg' %}{% endif %}" alt="{{ product.name }}">
+                            <div class="ul-product-actions">
+                                <button><i class="flaticon-shopping-bag"></i></button>
+                                <a href="#"><i class="flaticon-hide"></i></a>
+                                <button><i class="flaticon-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="ul-product-txt">
+                            <h4 class="ul-product-title"><a href="{% url 'web:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                            <h5 class="ul-product-category"><a href="{% url 'web:shop' %}?subcategory={{ product.subcategory.slug }}">{{ product.subcategory.name }}</a></h5>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="swiper-slide">
+                    <p>No products available.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ul-sidebar-products-slider-nav flex-shrink-0">
+            <button class="prev"><i class="flaticon-left-arrow"></i></button>
+            <button class="next"><i class="flaticon-arrow-point-to-right"></i></button>
+        </div>
+    </div>
+
+    <div class="ul-sidebar-about d-none d-lg-block">
+        <p class="mb-0">Alif Uniforms offers custom solutions, blending innovation with tradition to meet the unique needs of businesses across the UAE and beyond. Contact us for tailored uniform designs.</p>
+    </div>
+
+    <!-- sidebar footer -->
+    <div class="ul-sidebar-footer">
+        <span class="ul-sidebar-footer-title">Follow us</span>
+        <div class="ul-sidebar-footer-social">
+            <a href="https://www.facebook.com/profile.php?id=61573550192485"><i class="flaticon-facebook-app-symbol"></i></a>
+            <a href="https://x.com/AlifUniformsUAQ"><i class="flaticon-twitter"></i></a>
+            <a href="https://www.instagram.com/alif_uniforms/"><i class="flaticon-instagram"></i></a>
+            <a href="#"><i class="flaticon-youtube"></i></a>
+        </div>
+    </div>
+</div>
+<!-- SIDEBAR SECTION END -->
+
+{% load static %}
+<!-- HEADER SECTION START -->
+<header class="ul-header">
+    <!-- header top -->
+    <div class="ul-header-top">
+        <div class="ul-header-top-slider splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                    <li class="splide__slide">
+                        <p class="ul-header-top-slider-item"><i class="flaticon-sparkle"></i> limited time offer</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- header bottom -->
+    <div class="ul-header-bottom">
+        <div class="ul-container">
+            <div class="ul-header-bottom-wrapper">
+                <!-- header left -->
+                <div class="header-bottom-left">
+                    <div class="logo-container">
+                        <a href="{% url 'web:index' %}" class="d-inline-block"><img src="{% static "web/img/alif nneww.png" %}" alt="logo" class="logo"></a>
+                    </div>
+
+                    <!-- search form -->
+                    <div class="ul-header-search-form-wrapper flex-grow-1 flex-shrink-0">
+                        <form action="#" class="ul-header-search-form">
+                            <div class="dropdown-wrapper">
+                                <select name="search-category" id="ul-header-search-category">
+                                    <option data-placeholder="true">Select Category</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.slug }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="ul-header-search-form-right">
+                                <input type="search" name="header-search" id="ul-header-search" placeholder="Search Here">
+                                <button type="submit"><span class="icon"><i class="flaticon-search-interface-symbol"></i></span></button>
+                            </div>
+                        </form>
+
+                        <button class="ul-header-mobile-search-closer d-xxl-none"><i class="flaticon-close"></i></button>
+                    </div>
+                </div>
+
+                <!-- header nav -->
+                <div class="ul-header-nav-wrapper">
+                    <div class="to-go-to-sidebar-in-mobile">
+                        <nav class="ul-header-nav">
+                            <a href="{% url 'web:index' %}">Home</a>
+                            <a href="{% url 'web:about' %}">About</a>
+                            <div class="has-sub-menu has-mega-menu">
+                                <a role="button">Shop</a>
+                                <div class="ul-header-submenu ul-header-megamenu">
+                                    <div class="single-col">
+                                        <span class="single-col-title">Categories</span>
+                                        <ul>
+                                            {% for category in categories %}
+                                            <li><a href="{% url 'web:shop' %}?category={{ category.slug }}">{{ category.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'web:blogs' %}">Blog</a>
+                            <a href="{% url 'web:contact' %}">Contact</a>
+                        </nav>
+                    </div>
+                </div>
+
+
+                <!-- sidebar opener -->
+                <div class="d-inline-flex">
+                    <button class="ul-header-sidebar-opener"><i class="flaticon-hamburger"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- HEADER SECTION END -->

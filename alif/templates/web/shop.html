@@ -1,0 +1,118 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% block content %}
+
+    <main>
+        <!-- BREADCRUMB SECTION START -->
+        <div class="ul-container">
+            <div class="ul-breadcrumb">
+                <h2 class="ul-breadcrumb-title">Shop Left Sidebar</h2>
+                <div class="ul-breadcrumb-nav">
+                    <a href="{% url 'web:index' %}"><i class="flaticon-home"></i> Home</a>
+                    <i class="flaticon-arrow-point-to-right"></i>
+                    <span class="current-page">Shop</span>
+                </div>
+            </div>
+        </div>
+        <!-- BREADCRUMB SECTION END -->
+
+        <!-- MAIN CONTENT SECTION START -->
+        <div class="ul-inner-page-container">
+            <div class="ul-inner-products-wrapper">
+                <div class="row ul-bs-row flex-column-reverse flex-md-row">
+                    <!-- left side bar -->
+                    <div class="col-lg-3 col-md-4">
+                        <div class="ul-products-sidebar">
+                            <!-- single widget / search -->
+                            <div class="ul-products-sidebar-widget ul-products-search">
+                                <form action="#" class="ul-products-search-form">
+                                    <input type="text" name="product-search" id="ul-products-search-field" placeholder="Search Items">
+                                    <button><i class="flaticon-search-interface-symbol"></i></button>
+                                </form>
+                            </div>
+
+                            <!-- single widget / categories -->
+                            <div class="ul-products-sidebar-widget ul-products-categories">
+                                <h3 class="ul-products-sidebar-widget-title">Categories</h3>
+                                <div class="ul-products-categories-link">
+                                    {% for category in categories %}
+                                        <a href="{% url 'web:shop' %}?category={{ category.slug }}"><span><i class="flaticon-arrow-point-to-right"></i> {{ category.name }}</span></a>
+                                    {% empty %}
+                                        <p>No categories available.</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- single widget / product status -->
+                            <div class="ul-products-sidebar-widget">
+                                <h3 class="ul-products-sidebar-widget-title">Product Status</h3>
+                                <div class="ul-products-categories-link">
+                                    <a href="{% url 'web:shop' %}?status=Published"><span><i class="flaticon-arrow-point-to-right"></i> In stock</span></a>
+                                    <a href="{% url 'web:shop' %}?status=Unpublished"><span><i class="flaticon-arrow-point-to-right"></i> Out of stock</span></a>
+                                </div>
+                            </div>
+
+                            <!-- single widget / size filter -->
+                            <div class="ul-products-sidebar-widget">
+                                <h3 class="ul-products-sidebar-widget-title">Filter By Sizes</h3>
+                                <div class="ul-products-color-filter-colors">
+                                    {% for size in size_options %}
+                                        <a href="{% url 'web:shop' %}?size={{ size.0 }}"><span class="left">{{ size.1 }}</span><span>{{ products|length }}</span></a>
+                                    {% empty %}
+                                        <p>No sizes available.</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- right products container -->
+                    <div class="col-lg-9 col-md-8">
+                        <div class="row ul-bs-row row-cols-lg-3 row-cols-2 row-cols-xxs-1">
+                            <!-- product card -->
+                            {% for product in products %}
+                            <div class="col">
+                                <div class="ul-product">
+                                    <a href="{% url 'web:product_detail' product.slug %}">
+                                        <div class="ul-product-img">
+                                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'web/img/default-product.jpg' %}{% endif %}" alt="{{ product.name }}">
+                                            <div class="ul-product-actions">
+                                                <button><i class="flaticon-shopping-bag"></i></button>
+                                                <a href="#"><i class="flaticon-hide"></i></a>
+                                                <button><i class="flaticon-heart"></i></button>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="ul-product-txt">
+                                        <h4 class="ul-product-title"><a href="{% url 'web:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                                        <h5 class="ul-product-category"><a href="{% url 'web:shop' %}?subcategory={{ product.subcategory.slug }}">{{ product.subcategory.name }}</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>No products available.</p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- pagination -->
+                        <div class="ul-pagination">
+                            <ul>
+                                <li><a href="#"><i class="flaticon-left-arrow"></i></a></li>
+                                <li class="pages">
+                                    <a href="#" class="active">01</a>
+                                    <a href="#">02</a>
+                                    <a href="#">03</a>
+                                    <a href="#">04</a>
+                                    <a href="#">05</a>
+                                </li>
+                                <li><a href="#"><i class="flaticon-arrow-point-to-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- MAIN CONTENT SECTION END -->
+    </main>
+
+{% endblock %}

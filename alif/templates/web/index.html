@@ -1,0 +1,493 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% block content %}
+<main>
+<!-- BANNER SECTION START -->
+<div class="overflow-hidden">
+    <div class="ul-container">
+        <section class="ul-banner">
+            <div class="ul-banner-slider-wrapper">
+                <div class="ul-banner-slider swiper">
+                    <div class="swiper-wrapper">
+                        <!-- single slide -->
+                        {% for slider in sliders %}
+                        <div class="swiper-slide ul-banner-slide {{ slider.slide_class }}">
+                            <div class="ul-banner-slide-img">
+                                <img src="{{ slider.image.url|default:'% static "web/img/default-slider.jpg" %' }}" alt="Banner Image">
+                            </div>
+                            <div class="ul-banner-slide-txt">
+                                <span class="ul-banner-slide-sub-title">{{ slider.sub_head|default:'Perfect for All Seasons' }}</span>
+                                <h1 class="ul-banner-slide-title">{{ slider.title|default:'Stylish Uniforms' }}</h1>
+                                <a href="{% url 'web:shop' %}" class="ul-btn">SHOP NOW <i class="flaticon-up-right-arrow"></i></a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- slider navigation -->
+                    <div class="ul-banner-slider-nav-wrapper">
+                        <div class="ul-banner-slider-nav">
+                            <button class="prev"><span class="icon"><i class="flaticon-down"></i></span></button>
+                            <button class="next"><span class="icon"><i class="flaticon-down"></i></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ul-banner-img-slider-wrapper">
+                <div class="ul-banner-img-slider swiper">
+                    <div class="swiper-wrapper">
+                        {% for slider in sliders %}
+                        <div class="swiper-slide">
+                            <img src="{{ slider.image.url|default:'% static "web/img/default-slider.jpg" %' }}" alt="Banner Image">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- BANNER SECTION END -->
+
+<!-- CATEGORY SECTION START -->
+<div class="ul-container">
+    <section class="ul-categories">
+        <div class="ul-inner-container">
+            <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 row-cols-xxs-1 ul-bs-row">
+                <!-- single category -->
+                {% for category in categories %}
+                <div class="col">
+                    <a class="ul-category d-flex align-items-center justify-content-between" href="{% url 'web:shop' %}?subcategory={{ category.subcategories.first.slug|default:category.slug }}">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <div class="ul-category-img flex-shrink-0">
+                                <img src="{{ category.image.url|default:'% static "web/img/default-category.jpg" %' }}" alt="{{ category.name }}">
+                            </div>
+                            <div class="ul-category-txt flex-grow-1 text-truncate ms-3">
+                                <span class="text-truncate d-block">{{ category.name }}</span>
+                            </div>
+                        </div>
+                        <div class="ul-category-btn flex-shrink-0 ms-2">
+                            <span><i class="flaticon-arrow-point-to-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+<!-- CATEGORY SECTION END -->
+
+<!-- AD SECTION START -->
+<div class="ul-container">
+    <section class="ul-ad">
+        <div class="ul-inner-container">
+            <div class="ul-ad-content">
+                <div class="ul-ad-txt">
+                    <span class="ul-ad-sub-title">Trending Products</span>
+                    <h2 class="ul-section-title">Get 15% Discount On All Uniforms!</h2>
+                    <div class="ul-ad-categories">
+                        <span class="category"><span><i class="flaticon-check-mark"></i></span>Aviation</span>
+                        <span class="category"><span><i class="flaticon-check-mark"></i></span>Education</span>
+                        <span class="category"><span><i class="flaticon-check-mark"></i></span>Coporate</span>
+                        <span class="category"><span><i class="flaticon-check-mark"></i></span>Industrial</span>
+                        <span class="category"><span><i class="flaticon-check-mark"></i></span>Healthvare</span>
+                    </div>
+                </div>
+
+                <div class="ul-ad-img">
+                    <img src="{% static 'web/img/alif-index-1.png' %}" alt="Ad Image">
+                </div>
+
+                <a href="{% url 'web:shop' %}" class="ul-btn">Check Discount <i class="flaticon-up-right-arrow"></i></a>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- AD SECTION END -->
+
+<!-- MOST SELLING START -->
+<div class="ul-container">
+    <section class="ul-products ul-most-selling-products">
+        <div class="ul-inner-container">
+            <div class="ul-section-heading flex-lg-row flex-column text-md-start text-center">
+                <div class="left">
+                    <span class="ul-section-sub-title">most selling items</span>
+                    <h2 class="ul-section-title">Top selling Categories This Week</h2>
+                </div>
+
+                <div class="right">
+                    <div class="ul-most-sell-filter-navs">
+                        <button type="button" data-filter="all">All Products</button>
+                        <button type="button" data-filter=".best-selling">Best Selling</button>
+                        <button type="button" data-filter=".on-selling">On Selling</button>
+                        <button type="button" data-filter=".top-rating">Top Rating</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- products grid -->
+            <div class="ul-bs-row row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 ul-filter-products-wrapper">
+                <!-- product card -->
+                {% for product in products %}
+                <div class="mix col {% if product.is_best_selling %}best-selling{% endif %} {% if product.is_on_selling %}on-selling{% endif %} {% if product.is_top_rating %}top-rating{% endif %}">
+                    <div class="ul-product-horizontal">
+                        <a href="{% url 'web:product_detail' product.slug %}">
+                            <div class="ul-product-horizontal-img">
+                                <img src="{{ product.image.url|default:'% static "web/img/default-product.jpg" %' }}" alt="{{ product.name }}">
+                            </div>
+                        </a>
+                        <div class="ul-product-horizontal-txt">
+                            {% comment %} <span class="ul-product-price">$99.00</span> {% endcomment %}
+                            <h4 class="ul-product-title"><a href="{% url 'web:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                            <h5 class="ul-product-category"><a href="{% url 'web:shop' %}?subcategory={{ product.subcategory.slug }}">{{ product.subcategory.name }}</a></h5>
+                            <div class="ul-product-rating">
+                                <span class="star"><i class="flaticon-star"></i></span>
+                                <span class="star"><i class="flaticon-star"></i></span>
+                                <span class="star"><i class="flaticon-star"></i></span>
+                                <span class="star"><i class="flaticon-star"></i></span>
+                                <span class="star"><i class="flaticon-star"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No products available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+<!-- MOST SELLING END -->
+
+<!-- VIDEO SECTION START -->
+<div class="ul-container">
+    <div class="ul-video">
+        <div>
+            <img src="{% static 'web/img/video-thumbnail.jpg' %}" alt="Video Banner" class="ul-video-cover">
+        </div>
+        <!-- Replaced lightbox with normal link but kept play icon -->
+        <a href="https://www.instagram.com/reel/DMMslaGSWkz/?utm_source=ig_web_copy_link" target="_blank" class="ul-video-btn">
+            <i class="flaticon-play-button-arrowhead"></i>
+        </a>
+    </div>
+</div>
+
+<!-- VIDEO SECTION END -->
+
+<!-- SUB BANNER SECTION START -->
+<div class="ul-container">
+    <section class="ul-sub-banners">
+        <div class="ul-inner-container">
+            <div class="row ul-bs-row row-cols-md-3 row-cols-sm-2 row-cols-1">
+                <!-- single sub banner -->
+                <div class="col">
+                    <div class="ul-sub-banner">
+                        <div class="ul-sub-banner-txt">
+                            <div class="top">
+                                <span class="ul-ad-sub-title">Premium Uniforms</span>
+                                <h3 class="ul-sub-banner-title">Women's Collections</h3>
+                                <p class="ul-sub-banner-descr">Up to 20% off on Women's Healthcare & Hospitality Uniforms</p>
+                            </div>
+
+                            <div class="bottom">
+                                <a href="{% url 'web:shop' %}" class="ul-sub-banner-btn">Collection <i class="flaticon-up-right-arrow"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="ul-sub-banner-img">
+                            <img src="{% static 'web/img/01.png' %}" alt="Sub Banner Image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- single sub banner -->
+                <div class="col">
+                    <div class="ul-sub-banner ul-sub-banner--2">
+                        <div class="ul-sub-banner-txt">
+                            <div class="top">
+                                <span class="ul-ad-sub-title">Premium Uniforms</span>
+                                <h3 class="ul-sub-banner-title">Men's Collections</h3>
+                                <p class="ul-sub-banner-descr">Up to 20% off on Men's Aviation & Corporate Uniforms</p>
+                            </div>
+
+                            <div class="bottom">
+                                <a href="{% url 'web:shop' %}" class="ul-sub-banner-btn">Collection <i class="flaticon-up-right-arrow"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="ul-sub-banner-img">
+                            <img src="{% static 'web/img/03 .png' %}" alt="Sub Banner Image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- single sub banner -->
+                <div class="col">
+                    <div class="ul-sub-banner ul-sub-banner--3">
+                        <div class="ul-sub-banner-txt">
+                            <div class="top">
+                                <span class="ul-ad-sub-title">Premium Uniforms</span>
+                                <h3 class="ul-sub-banner-title">Kid's Collections</h3>
+                                <p class="ul-sub-banner-descr">Up to 20% off on Kid's Education Uniforms</p>
+                            </div>
+
+                            <div class="bottom">
+                                <a href="{% url 'web:shop' %}" class="ul-sub-banner-btn">Collection <i class="flaticon-up-right-arrow"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="ul-sub-banner-img">
+                            <img src="{% static 'web/img/02.png' %}" alt="Sub Banner Image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- SUB BANNER SECTION END -->
+
+<!-- FLASH SALE SECTION START -->
+<div class="overflow-hidden">
+    <div class="ul-container">
+        <div class="ul-flash-sale">
+            <div class="ul-inner-container">
+                <!-- heading -->
+                <div class="ul-section-heading ul-flash-sale-heading">
+                    <div class="left">
+                        <span class="ul-section-sub-title">New Collection</span>
+                        <h2 class="ul-section-title">Trending Flash Sell</h2>
+                    </div>
+
+                    <div class="ul-flash-sale-countdown-wrapper" data-end-time="{{ flash_sale_end_time|default:'' }}">
+                        <div class="ul-flash-sale-countdown">
+                            <div class="days-wrapper">
+                                <div class="days number">00</div>
+                                <span class="txt">Days</span>
+                            </div>
+                            <div class="hours-wrapper">
+                                <div class="hours number">00</div>
+                                <span class="txt">Hours</span>
+                            </div>
+                            <div class="minutes-wrapper">
+                                <div class="minutes number">00</div>
+                                <span class="txt">Min</span>
+                            </div>
+                            <div class="seconds-wrapper">
+                                <div class="seconds number">00</div>
+                                <span class="txt">Sec</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'web:shop' %}" class="ul-btn">View All Collection <i class="flaticon-up-right-arrow"></i></a>
+                </div>
+
+                <!-- products slider -->
+                <div class="ul-flash-sale-slider swiper">
+                    <div class="swiper-wrapper">
+                        <!-- single product -->
+                        {% for flash_sale in flash_sales %}
+                        <div class="swiper-slide">
+                            <div class="ul-product">
+                                <div class="ul-product-heading">
+                                    {% comment %} <span class="ul-product-price">$99.00</span> {% endcomment %}
+                                    <span class="ul-product-discount-tag">{{ flash_sale.discount_percentage }}% Off</span>
+                                </div>
+
+                                <a href="{% url 'web:product_detail' flash_sale.product.slug %}">                                    <div class="ul-product-img">
+                                        <img src="{{ flash_sale.product.image.url|default:'% static "web/img/default-product.jpg" %' }}" alt="{{ flash_sale.product.name }}">
+    
+                                        <div class="ul-product-actions">
+                                            <button><i class="flaticon-shopping-bag"></i></button>
+                                            <a href="#"><i class="flaticon-hide"></i></a>
+                                            <button><i class="flaticon-heart"></i></button>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <div class="ul-product-txt">
+                                    <h4 class="ul-product-title"><a href="{% url 'web:product_detail' flash_sale.product.slug %}">{{ flash_sale.product.name }}</a></h4>
+                                    <h5 class="ul-product-category"><a href="{% url 'web:shop' %}?subcategory={{ flash_sale.product.subcategory.slug }}">{{ flash_sale.product.subcategory.name }}</a></h5>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FLASH SALE SECTION END -->
+
+<!-- REVIEWS SECTION START -->
+<section class="ul-reviews overflow-hidden">
+    <div class="ul-section-heading text-center justify-content-center">
+        <div>
+            <span class="ul-section-sub-title">Customer Reviews</span>
+            <h2 class="ul-section-title">Product Reviews</h2>
+            <p class="ul-reviews-heading-descr">Our references are very valuable, the result of a great effort...</p>
+        </div>
+    </div>
+
+    <!-- slider -->
+    <div class="ul-reviews-slider swiper">
+        <div class="swiper-wrapper">
+            <!-- single review -->
+            {% for review in reviews %}
+            <div class="swiper-slide">
+                <div class="ul-review">
+                    <div class="ul-review-rating">
+                        {% for i in "*****" %}
+                        {% if forloop.counter0 < review.rating %}
+                        <i class="flaticon-star"></i>
+                        {% else %}
+                        <i class="flaticon-star-3"></i>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p class="ul-review-descr">{{ review.review_text }}</p>
+                    <div class="ul-review-bottom">
+                        <div class="ul-review-reviewer">
+                            <div class="reviewer-image"><img src="{{ review.image.url|default:'% static "web/img/default-client.png" %' }}" alt="reviewer image"></div>
+                            <div>
+                                <h3 class="reviewer-name">{{ review.reviewer_name }}</h3>
+                                <span class="reviewer-role">{{ review.reviewer_role }}</span>
+                            </div>
+                        </div>
+
+                        <!-- icon -->
+                        <div class="ul-review-icon"><i class="flaticon-left"></i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- REVIEWS SECTION END -->
+
+<!-- NEWSLETTER SUBSCRIPTION SECTION START -->
+<div class="ul-container">
+    <section class="ul-nwsltr-subs">
+        <div class="ul-inner-container">
+            <!-- heading -->
+            <div class="ul-section-heading justify-content-center text-center">
+                <div>
+                    <span class="ul-section-sub-title text-white">GET NEWSLETTER</span>
+                    <h2 class="ul-section-title text-white">Sign Up to Newsletter</h2>
+                </div>
+            </div>
+
+            <!-- form -->
+            <div class="ul-nwsltr-subs-form-wrapper">
+                <div class="icon"><i class="flaticon-airplane"></i></div>
+                <form action="#" class="ul-nwsltr-subs-form">
+                    <input type="email" name="nwsltr-subs-email" id="nwsltr-subs-email" placeholder="Enter Your Email">
+                    <button type="submit">Subscribe Now <i class="flaticon-up-right-arrow"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- NEWSLETTER SUBSCRIPTION SECTION END -->
+
+<!-- BLOG SECTION START -->
+<div class="ul-container">
+    <section class="ul-blogs">
+        <div class="ul-inner-container">
+            <!-- heading -->
+            <div class="ul-section-heading">
+                <div class="left">
+                    <span class="ul-section-sub-title">News & Blog</span>
+                    <h2 class="ul-section-title">Latest News & Blog</h2>
+                </div>
+
+                <div>
+                    <a href="{% url 'web:blogs' %}" class="ul-blogs-heading-btn">View All Blog <i class="flaticon-up-right-arrow"></i></a>
+                </div>
+            </div>
+
+            <!-- blog grid -->
+            <div class="row ul-bs-row row-cols-md-3 row-cols-2 row-cols-xxs-1">
+                <!-- single blog -->
+                {% for blog in blogs %}
+                <div class="col">
+                    <div class="ul-blog">
+                        <div class="ul-blog-img">
+                            <img src="{{ blog.image.url }}" alt="Article Image">
+
+                            <div class="date">
+                                <span class="number">{{ blog.created_at.day }}</span>
+                                <span class="txt">{{ blog.created_at|date:"M" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="ul-blog-txt">
+                            <div class="ul-blog-infos flex gap-x-[30px] mb-[16px]">
+                                <!-- single info -->
+                                <div class="ul-blog-info">
+                                    <span class="icon"><i class="flaticon-user-2"></i></span>
+                                    <span class="text font-normal text-[14px] text-etGray">By {{ blog.author }}</span>
+                                </div>
+                            </div>
+
+                            <h3 class="ul-blog-title"><a href="{% url 'web:blog_details' blog.slug %}">{{ blog.title }}</a></h3>
+                            <p class="ul-blog-descr">{{ blog.content|truncatewords:10 }}</p>
+
+                            <a href="{% url 'web:blog_details' blog.slug %}" class="ul-blog-btn">Read More <i class="flaticon-up-right-arrow"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+<!-- BLOG SECTION END -->
+
+<!-- CLIENTS SECTION START -->
+<section class="ul-reviews overflow-hidden">
+    <div class="ul-section-heading text-center justify-content-center">
+        <div>
+            <span class="ul-section-sub-title">Client Testimonials</span>
+            <h2 class="ul-section-title">Our Valued Clients</h2>
+            <p class="ul-reviews-heading-descr">Our clients' trust is the foundation of our success...</p>
+        </div>
+    </div>
+
+    <!-- slider -->
+    <div class="ul-reviews-slider swiper">
+        <div class="swiper-wrapper">
+            <!-- single client -->
+            {% for client in clients %}
+            <div class="swiper-slide">
+                <div class="ul-review">
+                    <div class="ul-review-rating">
+                        <!-- No rating for clients, can be styled differently if needed -->
+                    </div>
+                    <p class="ul-review-descr">{{ client.testimonial }}</p>
+                    <div class="ul-review-bottom">
+                        <div class="ul-review-reviewer">
+                            <div class="reviewer-image"><img src="{{ client.image.url|default:'% static "web/img/default-client.png" %' }}" alt="client image"></div>
+                            <div>
+                                <h3 class="reviewer-name">{{ client.name }}</h3>
+                                <span class="reviewer-role">{{ client.role }}</span>
+                            </div>
+                        </div>
+
+                        <!-- icon -->
+                        <div class="ul-review-icon"><i class="flaticon-left"></i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- CLIENTS SECTION END -->
+</main>
+{% endblock %}

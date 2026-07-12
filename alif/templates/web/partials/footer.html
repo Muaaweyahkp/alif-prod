@@ -1,0 +1,117 @@
+ {% load static %}
+ <!-- FOOTER SECTION START -->
+    <footer class="ul-footer">
+        <div class="ul-inner-container">
+            <div class="ul-footer-top">
+                <!-- single links column -->
+                <div class="ul-footer-top-widget">
+                    <h3 class="ul-footer-top-widget-title">Clients</h3>
+
+                    <div class="ul-footer-top-widget-links">
+                        <a href="#">Hotpack</a>
+                        <a href="#">Assa Abloy</a>
+                        <a href="#">Rak Petropack</a>
+                        <a href="#">Perma Pipe</a>
+                        <a href="#">The Cove Rotana</a>
+                    </div>
+                </div>
+
+                <!-- single links column -->
+                <div class="ul-footer-top-widget">
+                    <h3 class="ul-footer-top-widget-title">Categories</h3>
+
+                    <div class="ul-footer-top-widget-links">
+                        {% for category in categories|slice:":5" %}
+                            <a href="{% url 'web:shop' %}?category={{ category.slug }}">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- single links column -->
+                <div class="ul-footer-top-widget">
+                    <h3 class="ul-footer-top-widget-title">Services</h3>
+
+                    <div class="ul-footer-top-widget-links">
+                        <a href="#">Special Offers</a>
+                        <a href="#">Express Delivery</a>
+                        <a href="#">Custom Uniform Design</a>
+                        <a href="#">Bulk Order Discounts</a>
+                        <a href="#">Corporate Gifting</a>
+                    </div>
+                </div>
+
+                <!-- single links column -->
+                <div class="ul-footer-top-widget">
+                    <h3 class="ul-footer-top-widget-title">Policies</h3>
+
+                    <div class="ul-footer-top-widget-links">
+                        <a href="#">Return Policy</a>
+                        <a href="#">Uniform Care Guidelines</a>
+                        <a href="#">About Alif Uniforms</a>
+                        <a href="#">Our Company</a>
+                        <a href="#">Careers</a>
+                    </div>
+                </div>
+
+                <!-- single links column -->
+                <div class="ul-footer-top-widget">
+                    <h3 class="ul-footer-top-widget-title">Help</h3>
+
+                    <div class="ul-footer-top-widget-links">
+                        <a href="#">Contact us</a>
+                        <a href="#">About us</a>
+                        <a href="#">Reviews</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Refund policy</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ul-footer-middle">
+                <!-- single widget -->
+                {% comment %} <div class="ul-footer-middle-widget">
+                    <h3 class="ul-footer-middle-widget-title">Contact Us</h3>
+                    <div class="ul-footer-middle-widget-content">
+                        <div class="contact-links">
+                            <a href="https://wa.me/+971544977899"><i class="flaticon-whatsapp"></i></a>
+                            <a href="https://wa.me/+971544086282"><i class="flaticon-whatsapp"></i></a>
+                            <a href="mailto:alifuniforms07@gmail.com"><i class="flaticon-email"></i></a>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <!-- single widget -->
+                <div class="ul-footer-middle-widget">
+                    <h3 class="ul-footer-middle-widget-title">Follow us</h3>
+                    <div class="ul-footer-middle-widget-content">
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/profile.php?id=61573550192485"><i class="flaticon-facebook-app-symbol"></i></a>
+                            <a href="https://x.com/AlifUniformsUAQ"><i class="flaticon-twitter"></i></a>
+                            <a href="https://www.instagram.com/alif_uniforms/"><i class="flaticon-instagram"></i></a>
+                            <a href="#"><i class="flaticon-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- single widget -->
+                <div class="ul-footer-middle-widget">
+                    <h3 class="ul-footer-middle-widget-title">Need help? Call now!</h3>
+                    <div class="ul-footer-middle-widget-content">
+                        <div class="contact-nums">
+                            <a href="tel:+971544977899">+971 54 497 7899</a>, <a href="tel:+971544086282">+971 54 408 6282</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- single widget -->
+                <div class="ul-footer-middle-widget align-self-center">
+                    <a href="index-2.html"><img src="{% static 'web/img/Alif logo png , color - red white,Capital letters.png' %}" alt="logo" class="logo"></a>
+                </div>
+            </div>
+
+            <div class="ul-footer-bottom">
+                <p class="copyright-txt">Copyright 2025 © <a href="https://muaaweyahkp.pythonanywhere.com/" class="ul-footer-bottom-link">Creovate Labs</a></p>
+                <img src="{% static 'web/img/payment-methods.png' %}" alt="payment methods logos">
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER SECTION END -->
